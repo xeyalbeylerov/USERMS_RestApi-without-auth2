@@ -20,5 +20,7 @@ public interface CountryServiceInter {
     Country updateCountry(Country u);
     Country insertCountry(Country u);
     void removeCountry(int id);
+    boolean isIdExists(Integer id);
+    boolean existsCountryByNameAndNationality(String countryName,String nationalityName);
     
 }

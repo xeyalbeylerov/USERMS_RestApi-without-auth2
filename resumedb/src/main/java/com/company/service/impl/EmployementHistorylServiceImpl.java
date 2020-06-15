@@ -31,4 +31,9 @@ public class EmployementHistorylServiceImpl implements EmployementHistorylServic
         return employementHistory.findByUser_Id(id);
     }
 
+    @Override
+    public boolean isIdExists(Integer id) {
+        return employementHistory.existsEmployementHistoryById(id);
+    }
+
 }

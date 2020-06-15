@@ -47,4 +47,14 @@ public class CountryServiceImpl implements CountryServiceInter {
          countryDao.deleteById(id);
     }
 
+    @Override
+    public boolean isIdExists(Integer id) {
+        return countryDao.existsCountryById(id);
+    }
+
+    @Override
+    public boolean existsCountryByNameAndNationality(String countryName, String nationalityName) {
+        return countryDao.existsCountryByNameAndNationality(countryName,nationalityName);
+    }
+
 }

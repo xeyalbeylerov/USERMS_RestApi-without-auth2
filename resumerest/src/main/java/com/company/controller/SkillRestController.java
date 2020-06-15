@@ -79,7 +79,7 @@ public class SkillRestController {
     //
     //take json skill data and update skill then return it
     @PutMapping("/skills")
-    public ResponseEntity<ResponseDTO> updateUser(@RequestBody SkillDTO skillDto) {
+    public ResponseEntity<ResponseDTO> updateSkill(@RequestBody SkillDTO skillDto) {
 
         Skill skill = new Skill(skillDto.getId(), skillDto.getName());
         try {
@@ -94,7 +94,7 @@ public class SkillRestController {
 
     //take path and json skill name and update skill then return it
     @PutMapping("/skills/{skillid}")
-    public ResponseEntity<ResponseDTO> updateUser(@PathVariable("skillid") int skillId, @RequestBody SkillDTO skillDto) {
+    public ResponseEntity<ResponseDTO> updateSkill(@PathVariable("skillid") int skillId, @RequestBody SkillDTO skillDto) {
 
         Skill skill = new Skill(skillId, skillDto.getName());
         try {

@@ -5,7 +5,7 @@
  */
 package com.company.service.inter;
 
-import com.company.entity.Country;
+import com.company.entity.EmployementHistory;
 
 import java.util.List;
 
@@ -13,12 +13,6 @@ import java.util.List;
  *
  * @author xeyal
  */
-public interface CountryServiceInter {
-
-    List<Country> getAll();
-    Country getById(int id);
-    Country updateCountry(Country u);
-    Country insertCountry(Country u);
-    void removeCountry(int id);
-    
+public interface EmployementHistorylServiceRestInter {
+     public List<EmployementHistory> getAllEmployementHistoryByUserId(int userId);
 }

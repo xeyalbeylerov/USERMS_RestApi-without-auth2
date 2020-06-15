@@ -57,12 +57,18 @@ public class SkillServiceRestImpl implements SkillServiceRestInter {
 
 
     @Override
-    public void removeSkill(int id) {
+    public void removeSkill(int id) throws SkillNotFoundException {
+        //check skill exists
+        boolean isExists = skillDao.isIdExists(id);
+        if (!isExists) throw new SkillNotFoundException();
         skillDao.removeSkill(id);
     }
 
     @Override
-    public Skill getByName(String name) {
+    public Skill getByName(String name) throws SkillNotFoundException {
+        //check skill exists
+        boolean isExists = skillDao.existsSkillByName(name);
+        if (!isExists) throw new SkillNotFoundException();
         return skillDao.getByName(name);
     }
 

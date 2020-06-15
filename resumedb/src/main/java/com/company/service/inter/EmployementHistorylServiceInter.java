@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface EmployementHistorylServiceInter {
      public List<EmployementHistory> getAllEmployementHistoryByUserId(int userId);
+     boolean isIdExists(Integer id);
 }

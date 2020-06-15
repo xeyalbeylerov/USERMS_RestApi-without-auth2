@@ -23,9 +23,9 @@ public interface SkillServiceRestInter {
 
     Skill updateSkill(Skill u) throws SkillNotFoundException, SkillAlreadyExistsException;
 
-    void removeSkill(int id);
+    void removeSkill(int id) throws SkillNotFoundException;
 
-    public Skill getByName(String name);
+    public Skill getByName(String name) throws SkillNotFoundException;
     boolean existsSkillById(Integer id);
     public Skill insertSkill(Skill skl) throws SkillAlreadyExistsException;
 }

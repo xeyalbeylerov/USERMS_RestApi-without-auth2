@@ -82,7 +82,7 @@ public class UserSkillRestController {
         } catch (UserNotFoundException ex) {
             return ResponseEntity.ok(ResponseDTO.of(404, "There is no user found with this id"));
         } catch (UserSkillAlreadyExists ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "User already have this skill"));
+            return ResponseEntity.ok(ResponseDTO.of(400, "User already have this skill"));
         } catch (SkillNotFoundException ex) {
             return ResponseEntity.ok(ResponseDTO.of(404, "There is ot any skill for this id"));
         }
@@ -140,7 +140,7 @@ public class UserSkillRestController {
         } catch (UserNotFoundException ex) {
             return ResponseEntity.ok(ResponseDTO.of(404, "There is no user found with this id"));
         } catch (UserSkillAlreadyExists ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "User already have this skill"));
+            return ResponseEntity.ok(ResponseDTO.of(400, "User already have this skill"));
         } catch (SkillNotFoundException ex) {
             return ResponseEntity.ok(ResponseDTO.of(404, "There is not any skill for this id"));
         }
@@ -163,7 +163,7 @@ public class UserSkillRestController {
         try {
             userSkillService.updateUserSkill(id, userSkill);
         } catch (IdIsNullException e) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "User skills id must be filled while update"));
+            return ResponseEntity.ok(ResponseDTO.of(500, "User skills id must be filled while update"));
         } catch (UserSkillNotFoundException e) {
             return ResponseEntity.ok(ResponseDTO.of(404, "There is no user skills found with this id"));
         } catch (UserNotFoundException ex) {

@@ -7,8 +7,6 @@ import com.company.exceptions.countryExceptions.CountryAlreadyExistsException;
 import com.company.exceptions.countryExceptions.CountryNotFoundException;
 import com.company.service.inter.CountryServiceRestInter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,7 +69,7 @@ public class CountryRestController {
         try {
             country = countryService.insertCountry(country);
         } catch (CountryAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(500, "Country already exists"));
+            return ResponseEntity.ok(ResponseDTO.of(400, "Country already exists"));
         }
         return ResponseEntity.ok(ResponseDTO.of(new CountryDTO(country), "Successfully added"));
 
@@ -86,9 +84,9 @@ public class CountryRestController {
         try {
             country = countryService.updateCountry(country);
         } catch (CountryNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(500, "Country does not exists"));
+            return ResponseEntity.ok(ResponseDTO.of(404, "Country does not exists"));
         } catch (CountryAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(500, "Country already exists"));
+            return ResponseEntity.ok(ResponseDTO.of(400, "Country already exists"));
         }
         return ResponseEntity.ok(ResponseDTO.of(new CountryDTO(country), "Successfully updated"));
     }
@@ -101,9 +99,9 @@ public class CountryRestController {
         try {
             country = countryService.updateCountry(country);
         } catch (CountryNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(500, "Country does not exists"));
+            return ResponseEntity.ok(ResponseDTO.of(404, "Country does not exists"));
         } catch (CountryAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(500, "Country already exists"));
+            return ResponseEntity.ok(ResponseDTO.of(400, "Country already exists"));
         }
         return ResponseEntity.ok(ResponseDTO.of(new CountryDTO(country), "Successfully updated"));
     }

@@ -88,7 +88,7 @@ public class UserRestController {
         try {
             userDTO = userService.addUser(userDto);
         } catch (Exception ex) {
-            return ResponseEntity.ok(ResponseDTO.of(500, "User already exists"));
+            return ResponseEntity.ok(ResponseDTO.of(400, "User already exists"));
         }
         return ResponseEntity.ok(ResponseDTO.of(userDTO, "Successfully added"));
 

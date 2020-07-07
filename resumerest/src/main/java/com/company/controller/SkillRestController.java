@@ -71,7 +71,7 @@ public class SkillRestController {
         try {
             skill = skillService.insertSkill(skill);
         } catch (SkillAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(500, "Skill already exists"));
+            return ResponseEntity.ok(ResponseDTO.of(400, "Skill already exists"));
         }
         return ResponseEntity.ok(ResponseDTO.of(new SkillDTO(skill), "Successfully added"));
 
@@ -86,9 +86,9 @@ public class SkillRestController {
         try {
             skill = skillService.updateSkill(skill);
         } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(500, "Skill does not exists"));
+            return ResponseEntity.ok(ResponseDTO.of(404, "Skill does not exists"));
         } catch (SkillAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(500, "Skill already exists"));
+            return ResponseEntity.ok(ResponseDTO.of(400, "Skill already exists"));
         }
         return ResponseEntity.ok(ResponseDTO.of(new SkillDTO(skill), "Successfully updated"));
     }
@@ -101,9 +101,9 @@ public class SkillRestController {
         try {
             skill = skillService.updateSkill(skill);
         } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(500, "Skill does not exists"));
+            return ResponseEntity.ok(ResponseDTO.of(404, "Skill does not exists"));
         } catch (SkillAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(500, "Skill already exists"));
+            return ResponseEntity.ok(ResponseDTO.of(400, "Skill already exists"));
         }
         return ResponseEntity.ok(ResponseDTO.of(new SkillDTO(skill), "Successfully updated"));
     }

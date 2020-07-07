@@ -34,7 +34,6 @@ public class SkillRestController {
         return ResponseEntity.ok(ResponseDto.of(skillDtos));
     }
 
-
     //return specify skill by id
     @GetMapping("/skills/{id}")
     public ResponseEntity<ResponseDto> getSkill(@PathVariable("id") int id) {
@@ -61,7 +60,7 @@ public class SkillRestController {
         return ResponseEntity.ok(ResponseDto.of(new SkillDto(skill), "Successfully deleted"));
     }
 
-    //    //take json skill data and add skill then return it
+    //    take json skill data and add skill then return it
     @PostMapping("/skills")
     public ResponseEntity<ResponseDto> addSkill(@RequestBody SkillDto skillDto) {
 
@@ -79,23 +78,21 @@ public class SkillRestController {
     //take json skill data and update skill then return it
     @PutMapping("/skills")
     public ResponseEntity<ResponseDto> updateSkill(@RequestBody SkillDto skillDto) {
-
         Skill skill = new Skill(skillDto.getId(), skillDto.getName());
-        try {
-            skill = skillService.updateSkill(skill);
-        } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDto.of(404, "Skill does not exists"));
-        } catch (SkillAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDto.of(400, "Skill already exists"));
-        }
-        return ResponseEntity.ok(ResponseDto.of(new SkillDto(skill), "Successfully updated"));
+//        catch errors and return ResponseEntity
+        return updateSkillLogic(skill);
     }
 
     //take path and json skill name and update skill then return it
     @PutMapping("/skills/{skillid}")
     public ResponseEntity<ResponseDto> updateSkill(@PathVariable("skillid") int skillId, @RequestBody SkillDto skillDto) {
-
         Skill skill = new Skill(skillId, skillDto.getName());
+        //        catch errors and return ResponseEntity
+        return updateSkillLogic(skill);
+    }
+
+    //    For updateSkill methods
+    private ResponseEntity updateSkillLogic(Skill skill) {
         try {
             skill = skillService.updateSkill(skill);
         } catch (SkillNotFoundException ex) {

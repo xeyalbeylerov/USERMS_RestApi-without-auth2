@@ -8,17 +8,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserSkillDTO {
+public class UserSkillDto {
     private Integer id;
     private Integer power;
-    private SkillDTO skill;
+    private SkillDto skill;
 
 
 
-    public UserSkillDTO(UserSkill userSkill) {
+    public UserSkillDto(UserSkill userSkill) {
         this.id =userSkill.getId();
         this.power = userSkill.getPower();
-        this.skill = new SkillDTO(userSkill.getSkill());
+        this.skill = new SkillDto(userSkill.getSkill());
     }
 
 }

@@ -10,14 +10,14 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class EmployementHistoryDTO {
+public class EmployementHistoryDto {
     private Integer id;
     private String header;
     private Date beginDate;
     private Date endDate;
     private String jobDescription;
 
-    public EmployementHistoryDTO(EmployementHistory eHistory) {
+    public EmployementHistoryDto(EmployementHistory eHistory) {
         this.id = eHistory.getId();
         this.header = eHistory.getHeader();
         this.beginDate = eHistory.getBeginDate();

@@ -7,7 +7,7 @@ package com.company.service.inter;
 
 import com.company.exceptions.IdIsNullException;
 import com.company.exceptions.userExceptions.UserNotFoundException;
-import com.company.dto.UserDTO;
+import com.company.dto.UserDto;
 import com.company.entity.User;
 
 import java.util.List;
@@ -27,9 +27,9 @@ public interface UserServiceRestInter {
 
     User getById(int userId) throws UserNotFoundException;
 
-    UserDTO addUser(UserDTO u) throws Exception;
+    UserDto addUser(UserDto u) throws Exception;
 
-    UserDTO updateUser(UserDTO userEditDto) throws IdIsNullException, UserNotFoundException;
+    UserDto updateUser(UserDto userEditDto) throws IdIsNullException, UserNotFoundException;
 
     boolean removeUser(int i) throws UserNotFoundException;
 

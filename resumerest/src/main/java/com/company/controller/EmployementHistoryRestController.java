@@ -1,7 +1,7 @@
 package com.company.controller;
 
-import com.company.dto.EmployementHistoryDTO;
-import com.company.dto.ResponseDTO;
+import com.company.dto.EmployementHistoryDto;
+import com.company.dto.ResponseDto;
 import com.company.entity.EmployementHistory;
 import com.company.service.inter.EmployementHistorylServiceRestInter;
 import lombok.RequiredArgsConstructor;
@@ -48,16 +48,16 @@ public class EmployementHistoryRestController {
 //    }
 
     @GetMapping("/ehistories/{id}")
-    public ResponseEntity<ResponseDTO> getEmployementHistoriesByUserId(@PathVariable("id") int id) {
+    public ResponseEntity<ResponseDto> getEmployementHistoriesByUserId(@PathVariable("id") int id) {
         List<EmployementHistory> employementHistory = employementHistoryService.getAllEmployementHistoryByUserId(id);
 
-        List<EmployementHistoryDTO> eHistoryDTOS = new ArrayList<>();
+        List<EmployementHistoryDto> eHistoryDTOS = new ArrayList<>();
         //skill-i skillDto ya cevirir
         for (int i = 0; i < employementHistory.size(); i++) {
             EmployementHistory s = employementHistory.get(i);
-            eHistoryDTOS.add(new EmployementHistoryDTO(s));
+            eHistoryDTOS.add(new EmployementHistoryDto(s));
         }
-        return ResponseEntity.ok(ResponseDTO.of(eHistoryDTOS));
+        return ResponseEntity.ok(ResponseDto.of(eHistoryDTOS));
     }
 
 //    //    delete specify skill by id and return deleted skill

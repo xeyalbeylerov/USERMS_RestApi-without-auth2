@@ -1,7 +1,6 @@
 package com.company;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.company.dto.ResponseDTO;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

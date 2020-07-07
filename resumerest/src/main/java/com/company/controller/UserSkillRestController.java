@@ -1,8 +1,8 @@
 package com.company.controller;
 
-import com.company.dto.ResponseDTO;
-import com.company.dto.SkillDTO;
-import com.company.dto.UserSkillDTO;
+import com.company.dto.ResponseDto;
+import com.company.dto.SkillDto;
+import com.company.dto.UserSkillDto;
 import com.company.entity.Skill;
 import com.company.entity.UserSkill;
 import com.company.exceptions.IdIsNullException;
@@ -12,8 +12,6 @@ import com.company.exceptions.userSkillExceptions.UserSkillAlreadyExists;
 import com.company.exceptions.userSkillExceptions.UserSkillNotFoundException;
 import com.company.service.inter.UserSkillServiceRestInter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,42 +35,42 @@ public class UserSkillRestController {
 //    }
 
     @GetMapping("/userskills/{id}")
-    public ResponseEntity<ResponseDTO> getUserSkills(@PathVariable("id") int id) {
+    public ResponseEntity<ResponseDto> getUserSkills(@PathVariable("id") int id) {
         List<UserSkill> userSkills = userSkillService.getAllSkillByUserId(id);
 
-        List<UserSkillDTO> userSkillsDTO = new ArrayList<>();
+        List<UserSkillDto> userSkillsDTO = new ArrayList<>();
 
         for (int i = 0; i < userSkills.size(); i++) {
             UserSkill us = userSkills.get(i);
-            userSkillsDTO.add(new UserSkillDTO(us));
+            userSkillsDTO.add(new UserSkillDto(us));
         }
-        return ResponseEntity.ok(ResponseDTO.of(userSkillsDTO));
+        return ResponseEntity.ok(ResponseDto.of(userSkillsDTO));
     }
 
     @DeleteMapping("/userskills/{id}")
-    public ResponseEntity<ResponseDTO> deleteUserSkills(@PathVariable("id") int id) {
+    public ResponseEntity<ResponseDto> deleteUserSkills(@PathVariable("id") int id) {
         List<UserSkill> userSkills = userSkillService.getAllSkillByUserId(id);
         userSkillService.removeUserSkill(id);
 
-        List<UserSkillDTO> userSkillsDTO = new ArrayList<>();
+        List<UserSkillDto> userSkillsDTO = new ArrayList<>();
 
         for (int i = 0; i < userSkills.size(); i++) {
             UserSkill us = userSkills.get(i);
-            userSkillsDTO.add(new UserSkillDTO(us));
+            userSkillsDTO.add(new UserSkillDto(us));
         }
-        return ResponseEntity.ok(ResponseDTO.of(userSkillsDTO, "All skills of user successfully deleted"));
+        return ResponseEntity.ok(ResponseDto.of(userSkillsDTO, "All skills of user successfully deleted"));
     }
 
     //reuqired {"power": 9,"skill": {"id":6}}
     //Or reuqired {"power": 9,"skill": {"name": "SkillName"}}
     @PostMapping("/userskills/{id}")
-    public ResponseEntity<ResponseDTO> addUserSkill(@PathVariable("id") int id, @RequestBody UserSkillDTO userSkillDTO) {
+    public ResponseEntity<ResponseDto> addUserSkill(@PathVariable("id") int id, @RequestBody UserSkillDto userSkillDTO) {
 
         UserSkill userSkill = new UserSkill();
         userSkill.setPower(userSkillDTO.getPower());//power set olunur
 
         //skillDto to Skill(only id)
-        SkillDTO skillDTO = userSkillDTO.getSkill();
+        SkillDto skillDTO = userSkillDTO.getSkill();
         Skill s = new Skill();
         s.setId(skillDTO.getId());
         userSkill.setSkill(s);
@@ -80,11 +78,11 @@ public class UserSkillRestController {
         try {
             userSkillService.insertUserSkill(id, userSkill);
         } catch (UserNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "There is no user found with this id"));
+            return ResponseEntity.ok(ResponseDto.of(404, "There is no user found with this id"));
         } catch (UserSkillAlreadyExists ex) {
-            return ResponseEntity.ok(ResponseDTO.of(400, "User already have this skill"));
+            return ResponseEntity.ok(ResponseDto.of(400, "User already have this skill"));
         } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "There is ot any skill for this id"));
+            return ResponseEntity.ok(ResponseDto.of(404, "There is ot any skill for this id"));
         }
 //
 //        //list skillDto to Skill
@@ -93,7 +91,7 @@ public class UserSkillRestController {
 //            SkillDTO skillDTO = SkillsDTO.get(i);
 //            skills.get(i).setName(skillDTO.getName());
 //        }
-        return ResponseEntity.ok(ResponseDTO.of(userSkillDTO, "Successfully added"));
+        return ResponseEntity.ok(ResponseDto.of(userSkillDTO, "Successfully added"));
     }
 
 //this this not workin, because UserSkill entity doesnt containing cascade persist.
@@ -124,7 +122,7 @@ public class UserSkillRestController {
 
 
     @PostMapping("/userskills/{id}/skill/{skillid}/power/{power}")
-    public ResponseEntity<ResponseDTO> addUserSkillById(@PathVariable("id") int id,
+    public ResponseEntity<ResponseDto> addUserSkillById(@PathVariable("id") int id,
                                                         @PathVariable("power") Integer skillPower,
                                                         @PathVariable("skillid") Integer skillId
     ) {
@@ -138,24 +136,24 @@ public class UserSkillRestController {
         try {
             userSkillReturned = userSkillService.insertUserSkill(id, userSkill);
         } catch (UserNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "There is no user found with this id"));
+            return ResponseEntity.ok(ResponseDto.of(404, "There is no user found with this id"));
         } catch (UserSkillAlreadyExists ex) {
-            return ResponseEntity.ok(ResponseDTO.of(400, "User already have this skill"));
+            return ResponseEntity.ok(ResponseDto.of(400, "User already have this skill"));
         } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "There is not any skill for this id"));
+            return ResponseEntity.ok(ResponseDto.of(404, "There is not any skill for this id"));
         }
 
-        return ResponseEntity.ok(ResponseDTO.of(new UserSkillDTO(userSkillReturned), "Successfully added"));
+        return ResponseEntity.ok(ResponseDto.of(new UserSkillDto(userSkillReturned), "Successfully added"));
     }
 
     //reuqired {"id": 19,"power":2,"skill":{"id":2 }}
     @PutMapping("/userskills/{id}")
-    public ResponseEntity<ResponseDTO> updateUserSkill(@PathVariable("id") int id, @RequestBody UserSkillDTO userSkillDTO) {
+    public ResponseEntity<ResponseDto> updateUserSkill(@PathVariable("id") int id, @RequestBody UserSkillDto userSkillDTO) {
         UserSkill userSkill = new UserSkill();
         userSkill.setId(userSkillDTO.getId());
         userSkill.setPower(userSkillDTO.getPower());
         //skillDto to Skill
-        SkillDTO skillDTO = userSkillDTO.getSkill();
+        SkillDto skillDTO = userSkillDTO.getSkill();
         Skill s = new Skill();
         s.setId(skillDTO.getId());
         s.setName(skillDTO.getName());
@@ -163,12 +161,12 @@ public class UserSkillRestController {
         try {
             userSkillService.updateUserSkill(id, userSkill);
         } catch (IdIsNullException e) {
-            return ResponseEntity.ok(ResponseDTO.of(500, "User skills id must be filled while update"));
+            return ResponseEntity.ok(ResponseDto.of(500, "User skills id must be filled while update"));
         } catch (UserSkillNotFoundException e) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "There is no user skills found with this id"));
+            return ResponseEntity.ok(ResponseDto.of(404, "There is no user skills found with this id"));
         } catch (UserNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "There is no user found with this id"));
+            return ResponseEntity.ok(ResponseDto.of(404, "There is no user found with this id"));
         }
-        return ResponseEntity.ok(ResponseDTO.of(userSkillDTO, "User skill Successfully updated"));
+        return ResponseEntity.ok(ResponseDto.of(userSkillDTO, "User skill Successfully updated"));
     }
 }

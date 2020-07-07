@@ -1,7 +1,7 @@
 package com.company.controller;
 
-import com.company.dto.CountryDTO;
-import com.company.dto.ResponseDTO;
+import com.company.dto.CountryDto;
+import com.company.dto.ResponseDto;
 import com.company.entity.Country;
 import com.company.exceptions.countryExceptions.CountryAlreadyExistsException;
 import com.company.exceptions.countryExceptions.CountryNotFoundException;
@@ -22,88 +22,88 @@ public class CountryRestController {
     //return all users
     //countries?name=&surname=&age=
     @GetMapping("/countries")
-    public ResponseEntity<ResponseDTO> getCountries() {
+    public ResponseEntity<ResponseDto> getCountries() {
         List<Country> countries = countryService.getAll();
 
-        List<CountryDTO> countryDTOS = new ArrayList<>();
+        List<CountryDto> countryDtos = new ArrayList<>();
         //skill-i skillDto ya cevirir
         for (int i = 0; i < countries.size(); i++) {
             Country s = countries.get(i);
-            countryDTOS.add(new CountryDTO(s));
+            countryDtos.add(new CountryDto(s));
         }
-        return ResponseEntity.ok(ResponseDTO.of(countryDTOS));
+        return ResponseEntity.ok(ResponseDto.of(countryDtos));
     }
 
 
     //return specify country by id
     @GetMapping("/countries/{id}")
-    public ResponseEntity<ResponseDTO> getCountry(@PathVariable("id") int id) {
+    public ResponseEntity<ResponseDto> getCountry(@PathVariable("id") int id) {
         Country country;
         try {
             country = countryService.getById(id);
         } catch (CountryNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "There is no country found with this id"));
+            return ResponseEntity.ok(ResponseDto.of(404, "There is no country found with this id"));
         }
-        return ResponseEntity.ok(ResponseDTO.of(new CountryDTO(country)));
+        return ResponseEntity.ok(ResponseDto.of(new CountryDto(country)));
     }
 
     //    delete specify skill by id and return deleted skill
     @DeleteMapping("/countries/{id}")
-    public ResponseEntity<ResponseDTO> deleteCountry(@PathVariable("id") int id) {
+    public ResponseEntity<ResponseDto> deleteCountry(@PathVariable("id") int id) {
         Country country;
         try {
             country = countryService.getById(id);
             countryService.removeCountry(id);
         } catch (CountryNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "There is no country found with this id"));
+            return ResponseEntity.ok(ResponseDto.of(404, "There is no country found with this id"));
         }
 
-        return ResponseEntity.ok(ResponseDTO.of(new CountryDTO(country), "Successfully deleted"));
+        return ResponseEntity.ok(ResponseDto.of(new CountryDto(country), "Successfully deleted"));
     }
 
     //    //take json country data and add country then return it
     @PostMapping("/countries")
-    public ResponseEntity<ResponseDTO> addCountry(@RequestBody CountryDTO countryDTO) {
+    public ResponseEntity<ResponseDto> addCountry(@RequestBody CountryDto countryDTO) {
 
         Country country = new Country(null, countryDTO.getName(), countryDTO.getNationality());
         try {
             country = countryService.insertCountry(country);
         } catch (CountryAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(400, "Country already exists"));
+            return ResponseEntity.ok(ResponseDto.of(400, "Country already exists"));
         }
-        return ResponseEntity.ok(ResponseDTO.of(new CountryDTO(country), "Successfully added"));
+        return ResponseEntity.ok(ResponseDto.of(new CountryDto(country), "Successfully added"));
 
     }
 
     //
     //take json country data and update country then return it
     @PutMapping("/countries")
-    public ResponseEntity<ResponseDTO> updateCountry(@RequestBody CountryDTO countryDTO) {
+    public ResponseEntity<ResponseDto> updateCountry(@RequestBody CountryDto countryDTO) {
 
         Country country = new Country(countryDTO.getId(), countryDTO.getName(), countryDTO.getNationality());
         try {
             country = countryService.updateCountry(country);
         } catch (CountryNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "Country does not exists"));
+            return ResponseEntity.ok(ResponseDto.of(404, "Country does not exists"));
         } catch (CountryAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(400, "Country already exists"));
+            return ResponseEntity.ok(ResponseDto.of(400, "Country already exists"));
         }
-        return ResponseEntity.ok(ResponseDTO.of(new CountryDTO(country), "Successfully updated"));
+        return ResponseEntity.ok(ResponseDto.of(new CountryDto(country), "Successfully updated"));
     }
 
     //take path and json country name and update country then return it
     @PutMapping("/countries/{countryid}")
-    public ResponseEntity<ResponseDTO> updateCountry(@PathVariable("countryid") int countryId, @RequestBody CountryDTO countryDTO) {
+    public ResponseEntity<ResponseDto> updateCountry(@PathVariable("countryid") int countryId, @RequestBody CountryDto countryDTO) {
 
         Country country = new Country(countryId, countryDTO.getName(), countryDTO.getNationality());
         try {
             country = countryService.updateCountry(country);
         } catch (CountryNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "Country does not exists"));
+            return ResponseEntity.ok(ResponseDto.of(404, "Country does not exists"));
         } catch (CountryAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(400, "Country already exists"));
+            return ResponseEntity.ok(ResponseDto.of(400, "Country already exists"));
         }
-        return ResponseEntity.ok(ResponseDTO.of(new CountryDTO(country), "Successfully updated"));
+        return ResponseEntity.ok(ResponseDto.of(new CountryDto(country), "Successfully updated"));
     }
 
 }

@@ -1,12 +1,9 @@
 package com.company.service.impl;
 
 
-import com.company.dto.CountryDTO;
 import com.company.entity.Country;
 import com.company.exceptions.countryExceptions.CountryAlreadyExistsException;
 import com.company.exceptions.countryExceptions.CountryNotFoundException;
-import com.company.exceptions.skillExceptions.SkillAlreadyExistsException;
-import com.company.exceptions.skillExceptions.SkillNotFoundException;
 import com.company.service.inter.CountryServiceInter;
 import com.company.service.inter.CountryServiceRestInter;
 import org.springframework.beans.factory.annotation.Autowired;

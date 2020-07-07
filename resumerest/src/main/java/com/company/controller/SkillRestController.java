@@ -1,14 +1,12 @@
 package com.company.controller;
 
-import com.company.dto.ResponseDTO;
-import com.company.dto.SkillDTO;
+import com.company.dto.ResponseDto;
+import com.company.dto.SkillDto;
 import com.company.entity.Skill;
 import com.company.exceptions.skillExceptions.SkillAlreadyExistsException;
 import com.company.exceptions.skillExceptions.SkillNotFoundException;
 import com.company.service.inter.SkillServiceRestInter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,88 +22,88 @@ public class SkillRestController {
     //return all users
     //users?name=&surname=&age=
     @GetMapping("/skills")
-    public ResponseEntity<ResponseDTO> getSkills() {
+    public ResponseEntity<ResponseDto> getSkills() {
         List<Skill> skills = skillService.getAll();
 
-        List<SkillDTO> skillDTOS = new ArrayList<>();
+        List<SkillDto> skillDtos = new ArrayList<>();
         //skill-i skillDto ya cevirir
         for (int i = 0; i < skills.size(); i++) {
             Skill s = skills.get(i);
-            skillDTOS.add(new SkillDTO(s));
+            skillDtos.add(new SkillDto(s));
         }
-        return ResponseEntity.ok(ResponseDTO.of(skillDTOS));
+        return ResponseEntity.ok(ResponseDto.of(skillDtos));
     }
 
 
     //return specify skill by id
     @GetMapping("/skills/{id}")
-    public ResponseEntity<ResponseDTO> getSkill(@PathVariable("id") int id) {
+    public ResponseEntity<ResponseDto> getSkill(@PathVariable("id") int id) {
         Skill skill;
         try {
             skill = skillService.getById(id);
         } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "There is no skill found with this id"));
+            return ResponseEntity.ok(ResponseDto.of(404, "There is no skill found with this id"));
         }
-        return ResponseEntity.ok(ResponseDTO.of(new SkillDTO(skill)));
+        return ResponseEntity.ok(ResponseDto.of(new SkillDto(skill)));
     }
 
     //    delete specify skill by id and return deleted skill
     @DeleteMapping("/skills/{id}")
-    public ResponseEntity<ResponseDTO> deleteSkill(@PathVariable("id") int id) {
+    public ResponseEntity<ResponseDto> deleteSkill(@PathVariable("id") int id) {
         Skill skill;
         try {
             skill = skillService.getById(id);
             skillService.removeSkill(id);
         } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "There is no skill found with this id"));
+            return ResponseEntity.ok(ResponseDto.of(404, "There is no skill found with this id"));
         }
 
-        return ResponseEntity.ok(ResponseDTO.of(new SkillDTO(skill), "Successfully deleted"));
+        return ResponseEntity.ok(ResponseDto.of(new SkillDto(skill), "Successfully deleted"));
     }
 
     //    //take json skill data and add skill then return it
     @PostMapping("/skills")
-    public ResponseEntity<ResponseDTO> addSkill(@RequestBody SkillDTO skillDto) {
+    public ResponseEntity<ResponseDto> addSkill(@RequestBody SkillDto skillDto) {
 
         Skill skill = new Skill(null, skillDto.getName());
         try {
             skill = skillService.insertSkill(skill);
         } catch (SkillAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(400, "Skill already exists"));
+            return ResponseEntity.ok(ResponseDto.of(400, "Skill already exists"));
         }
-        return ResponseEntity.ok(ResponseDTO.of(new SkillDTO(skill), "Successfully added"));
+        return ResponseEntity.ok(ResponseDto.of(new SkillDto(skill), "Successfully added"));
 
     }
 
     //
     //take json skill data and update skill then return it
     @PutMapping("/skills")
-    public ResponseEntity<ResponseDTO> updateSkill(@RequestBody SkillDTO skillDto) {
+    public ResponseEntity<ResponseDto> updateSkill(@RequestBody SkillDto skillDto) {
 
         Skill skill = new Skill(skillDto.getId(), skillDto.getName());
         try {
             skill = skillService.updateSkill(skill);
         } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "Skill does not exists"));
+            return ResponseEntity.ok(ResponseDto.of(404, "Skill does not exists"));
         } catch (SkillAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(400, "Skill already exists"));
+            return ResponseEntity.ok(ResponseDto.of(400, "Skill already exists"));
         }
-        return ResponseEntity.ok(ResponseDTO.of(new SkillDTO(skill), "Successfully updated"));
+        return ResponseEntity.ok(ResponseDto.of(new SkillDto(skill), "Successfully updated"));
     }
 
     //take path and json skill name and update skill then return it
     @PutMapping("/skills/{skillid}")
-    public ResponseEntity<ResponseDTO> updateSkill(@PathVariable("skillid") int skillId, @RequestBody SkillDTO skillDto) {
+    public ResponseEntity<ResponseDto> updateSkill(@PathVariable("skillid") int skillId, @RequestBody SkillDto skillDto) {
 
         Skill skill = new Skill(skillId, skillDto.getName());
         try {
             skill = skillService.updateSkill(skill);
         } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(404, "Skill does not exists"));
+            return ResponseEntity.ok(ResponseDto.of(404, "Skill does not exists"));
         } catch (SkillAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDTO.of(400, "Skill already exists"));
+            return ResponseEntity.ok(ResponseDto.of(400, "Skill already exists"));
         }
-        return ResponseEntity.ok(ResponseDTO.of(new SkillDTO(skill), "Successfully updated"));
+        return ResponseEntity.ok(ResponseDto.of(new SkillDto(skill), "Successfully updated"));
     }
 
 }

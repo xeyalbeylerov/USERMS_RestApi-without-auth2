@@ -9,7 +9,7 @@ package com.company.service.impl;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.company.exceptions.IdIsNullException;
 import com.company.exceptions.userExceptions.UserNotFoundException;
-import com.company.dto.UserDTO;
+import com.company.dto.UserDto;
 import com.company.entity.User;
 import com.company.service.inter.UserServiceInter;
 import com.company.service.inter.UserServiceRestInter;
@@ -62,7 +62,7 @@ public class UserServiceRestImpl implements UserServiceRestInter {
 
 
     @Override
-    public UserDTO updateUser(UserDTO userDTO) throws IdIsNullException, UserNotFoundException {
+    public UserDto updateUser(UserDto userDTO) throws IdIsNullException, UserNotFoundException {
         Integer id = userDTO.getId();
         //check id null
         if (id == null) throw new IdIsNullException();
@@ -93,7 +93,7 @@ public class UserServiceRestImpl implements UserServiceRestInter {
     BCrypt.Hasher geHasher;
 
     @Override
-    public UserDTO addUser(UserDTO userDto) throws Exception {
+    public UserDto addUser(UserDto userDto) throws Exception {
 
         boolean isExists = userDao.isEmailExists(userDto.getEmail());
         if (isExists == true) {
@@ -108,7 +108,7 @@ public class UserServiceRestImpl implements UserServiceRestInter {
 
         User userD = userDao.addUser(user);
 
-        UserDTO userDTO = new UserDTO();
+        UserDto userDTO = new UserDto();
         userDTO.setId(userD.getId());
         userDTO.setName(userD.getName());
         userDTO.setSurname(userD.getSurname());

@@ -8,12 +8,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CountryDTO {
+public class CountryDto {
     private Integer id;
     private String name;
     private String nationality;
 
-    public CountryDTO(Country country) {
+    public CountryDto(Country country) {
         this.id = country.getId();
         this.name = country.getName();
         this.nationality = country.getNationality();

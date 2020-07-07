@@ -25,6 +25,15 @@ public class UserSkillRestController {
 
     private final UserSkillServiceRestInter userSkillService;
 
+    //convert UserSkill List to UserSkillDto List
+    private List<UserSkillDto> userSkillsToUserSkillDtos(List<UserSkill> skills) {
+        List<UserSkillDto> userSkills = new ArrayList<>();
+        for (int i = 0; i < skills.size(); i++) {
+            UserSkill s = skills.get(i);
+            userSkills.add(new UserSkillDto(s));
+        }
+        return userSkills;
+    }
 
 //    @GetMapping("/users/{id}/skills")
 //    public ResponseEntity<ResponseDTO> getUserSkills(
@@ -38,12 +47,8 @@ public class UserSkillRestController {
     public ResponseEntity<ResponseDto> getUserSkills(@PathVariable("id") int id) {
         List<UserSkill> userSkills = userSkillService.getAllSkillByUserId(id);
 
-        List<UserSkillDto> userSkillsDTO = new ArrayList<>();
-
-        for (int i = 0; i < userSkills.size(); i++) {
-            UserSkill us = userSkills.get(i);
-            userSkillsDTO.add(new UserSkillDto(us));
-        }
+        //converting UserSkill List to UserSkillDto List
+        List<UserSkillDto> userSkillsDTO = userSkillsToUserSkillDtos(userSkills);
         return ResponseEntity.ok(ResponseDto.of(userSkillsDTO));
     }
 
@@ -51,13 +56,8 @@ public class UserSkillRestController {
     public ResponseEntity<ResponseDto> deleteUserSkills(@PathVariable("id") int id) {
         List<UserSkill> userSkills = userSkillService.getAllSkillByUserId(id);
         userSkillService.removeUserSkill(id);
-
-        List<UserSkillDto> userSkillsDTO = new ArrayList<>();
-
-        for (int i = 0; i < userSkills.size(); i++) {
-            UserSkill us = userSkills.get(i);
-            userSkillsDTO.add(new UserSkillDto(us));
-        }
+        //converting UserSkill List to UserSkillDto List
+        List<UserSkillDto> userSkillsDTO = userSkillsToUserSkillDtos(userSkills);
         return ResponseEntity.ok(ResponseDto.of(userSkillsDTO, "All skills of user successfully deleted"));
     }
 
@@ -67,7 +67,9 @@ public class UserSkillRestController {
     public ResponseEntity<ResponseDto> addUserSkill(@PathVariable("id") int id, @RequestBody UserSkillDto userSkillDTO) {
 
         UserSkill userSkill = new UserSkill();
-        userSkill.setPower(userSkillDTO.getPower());//power set olunur
+//        power is setting
+        userSkill.setPower(userSkillDTO.getPower());
+
 
         //skillDto to Skill(only id)
         SkillDto skillDTO = userSkillDTO.getSkill();
@@ -84,13 +86,6 @@ public class UserSkillRestController {
         } catch (SkillNotFoundException ex) {
             return ResponseEntity.ok(ResponseDto.of(404, "There is ot any skill for this id"));
         }
-//
-//        //list skillDto to Skill
-//        List<Skill> skills =new ArrayList<>();
-//        for (int i = 0; i < SkillsDTO.size(); i++) {
-//            SkillDTO skillDTO = SkillsDTO.get(i);
-//            skills.get(i).setName(skillDTO.getName());
-//        }
         return ResponseEntity.ok(ResponseDto.of(userSkillDTO, "Successfully added"));
     }
 
@@ -149,15 +144,18 @@ public class UserSkillRestController {
     //reuqired {"id": 19,"power":2,"skill":{"id":2 }}
     @PutMapping("/userskills/{id}")
     public ResponseEntity<ResponseDto> updateUserSkill(@PathVariable("id") int id, @RequestBody UserSkillDto userSkillDTO) {
+
         UserSkill userSkill = new UserSkill();
         userSkill.setId(userSkillDTO.getId());
         userSkill.setPower(userSkillDTO.getPower());
+
         //skillDto to Skill
         SkillDto skillDTO = userSkillDTO.getSkill();
         Skill s = new Skill();
         s.setId(skillDTO.getId());
         s.setName(skillDTO.getName());
         userSkill.setSkill(s);
+
         try {
             userSkillService.updateUserSkill(id, userSkill);
         } catch (IdIsNullException e) {

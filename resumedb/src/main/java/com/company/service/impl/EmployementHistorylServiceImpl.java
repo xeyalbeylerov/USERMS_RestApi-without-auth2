@@ -8,6 +8,7 @@ package com.company.service.impl;
 import com.company.repo.EmployementHistoryRepository;
 import com.company.entity.EmployementHistory;
 import com.company.service.inter.EmployementHistorylServiceInter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -16,24 +17,21 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * @author xeyal
+ * @author Khayal Baylarov
  */
 @Transactional
 @Service(value = "employementHistoryService")
+@RequiredArgsConstructor
 public class EmployementHistorylServiceImpl implements EmployementHistorylServiceInter {
-    @Autowired
-    @Qualifier(value = "employementHistoryRepository")
-    private EmployementHistoryRepository employementHistory;
 
+    private final EmployementHistoryRepository employementHistory;
 
     @Override
     public List<EmployementHistory> getAllEmployementHistoryByUserId(int id) {
         return employementHistory.findByUser_Id(id);
     }
-
     @Override
     public boolean isIdExists(Integer id) {
         return employementHistory.existsEmployementHistoryById(id);
     }
-
 }

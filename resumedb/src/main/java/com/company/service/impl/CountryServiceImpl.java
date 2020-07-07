@@ -1,31 +1,28 @@
 package com.company.service.impl;
 
-import com.company.repo.CountryRepository;
 import com.company.entity.Country;
+import com.company.repo.CountryRepository;
 import com.company.service.inter.CountryServiceInter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
- * @author Xeyal
+ * @author Khayal Baylarov
  */
 @Transactional
 @Service(value = "countryService")
+@RequiredArgsConstructor
 public class CountryServiceImpl implements CountryServiceInter {
 
-    @Autowired
-    @Qualifier("countryRepository")
-    private CountryRepository countryDao;
+    private final CountryRepository countryDao;
 
     @Override
     public List<Country> getAll() {
         return countryDao.findAll();
     }
-
 
     @Override
     public Country getById(int id) {
@@ -44,7 +41,7 @@ public class CountryServiceImpl implements CountryServiceInter {
 
     @Override
     public void removeCountry(int id) {
-         countryDao.deleteById(id);
+        countryDao.deleteById(id);
     }
 
     @Override
@@ -54,7 +51,6 @@ public class CountryServiceImpl implements CountryServiceInter {
 
     @Override
     public boolean existsCountryByNameAndNationality(String countryName, String nationalityName) {
-        return countryDao.existsCountryByNameAndNationality(countryName,nationalityName);
+        return countryDao.existsCountryByNameAndNationality(countryName, nationalityName);
     }
-
 }

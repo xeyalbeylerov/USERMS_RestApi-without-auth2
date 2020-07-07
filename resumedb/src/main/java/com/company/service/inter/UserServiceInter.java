@@ -10,7 +10,7 @@ import com.company.entity.User;
 import java.util.List;
 
 /**
- * @author xeyal
+ * @author Khayal Baylarov
  */
 public interface UserServiceInter {
 
@@ -22,15 +22,15 @@ public interface UserServiceInter {
 
     User findByEmail(String email);
     boolean isEmailExists(String email);
-    boolean isIdExists(Integer id);
+
     User getById(int userId);
 
     User addUser(User u);
 
     User updateUser(User u);
 
+    boolean isIdExists(Integer id);
+
     boolean removeUser(int i);
-
-
 
 }

@@ -10,8 +10,7 @@ import com.company.entity.Country;
 import java.util.List;
 
 /**
- *
- * @author xeyal
+ * @author Khayal Baylarov
  */
 public interface CountryServiceInter {
 
@@ -20,7 +19,8 @@ public interface CountryServiceInter {
     Country updateCountry(Country u);
     Country insertCountry(Country u);
     void removeCountry(int id);
+
     boolean isIdExists(Integer id);
-    boolean existsCountryByNameAndNationality(String countryName,String nationalityName);
-    
+
+    boolean existsCountryByNameAndNationality(String countryName, String nationalityName);
 }

@@ -7,6 +7,7 @@ import com.company.dto.ResponseDTO;
 import com.company.dto.UserDTO;
 import com.company.entity.User;
 import com.company.service.inter.UserServiceRestInter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class UserRestController {
 
-    @Autowired
-    @Qualifier("userServiceRest")
-    private UserServiceRestInter userService;
+    private final UserServiceRestInter userService;
 
     //return all users
     //users?name=&surname=&age=
@@ -97,7 +97,7 @@ public class UserRestController {
     //take json user data and update user then return it
     @PutMapping("/users")
     public ResponseEntity<ResponseDTO> updateUser(@RequestBody UserDTO userDto) {
-        UserDTO userDTO = null;
+        UserDTO userDTO;
         try {
             userDTO = userService.updateUser(userDto);
         } catch (UserNotFoundException | IdIsNullException ex) {

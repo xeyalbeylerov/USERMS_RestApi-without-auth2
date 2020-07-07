@@ -1,27 +1,23 @@
 package com.company.controller;
 
-import com.company.dto.CountryDTO;
 import com.company.dto.EmployementHistoryDTO;
 import com.company.dto.ResponseDTO;
-import com.company.entity.Country;
 import com.company.entity.EmployementHistory;
-import com.company.exceptions.countryExceptions.CountryAlreadyExistsException;
-import com.company.exceptions.countryExceptions.CountryNotFoundException;
-import com.company.service.inter.CountryServiceRestInter;
 import com.company.service.inter.EmployementHistorylServiceRestInter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class EmployementHistoryRestController {
-    @Autowired
-    @Qualifier("employementHistoryServiceRest")
-    private EmployementHistorylServiceRestInter employementHistoryService;
+
+    private final EmployementHistorylServiceRestInter employementHistoryService;
 
     //return all users
     //ehistories?name=&surname=&age=
@@ -51,7 +47,7 @@ public class EmployementHistoryRestController {
 //        return ResponseEntity.ok(ResponseDTO.of(new CountryDTO(employementHistory)));
 //    }
 
-     @GetMapping("/ehistories/{id}")
+    @GetMapping("/ehistories/{id}")
     public ResponseEntity<ResponseDTO> getEmployementHistoriesByUserId(@PathVariable("id") int id) {
         List<EmployementHistory> employementHistory = employementHistoryService.getAllEmployementHistoryByUserId(id);
 

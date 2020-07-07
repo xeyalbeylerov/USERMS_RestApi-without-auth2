@@ -11,6 +11,7 @@ import com.company.exceptions.userExceptions.UserNotFoundException;
 import com.company.exceptions.userSkillExceptions.UserSkillAlreadyExists;
 import com.company.exceptions.userSkillExceptions.UserSkillNotFoundException;
 import com.company.service.inter.UserSkillServiceRestInter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class UserSkillRestController {
 
-    @Autowired
-    @Qualifier("userSkillServiceRest")
-    private UserSkillServiceRestInter userSkillService;
+
+    private final UserSkillServiceRestInter userSkillService;
 
 
 //    @GetMapping("/users/{id}/skills")

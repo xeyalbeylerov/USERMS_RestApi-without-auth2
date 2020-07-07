@@ -10,6 +10,7 @@ import com.company.repo.UserRepository;
 
 import com.company.entity.User;
 import com.company.service.inter.UserServiceInter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -18,18 +19,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * @author xeyal
+ * @author Khayal Baylarov
  */
-
 
 @Service(value = "userService")
 @Transactional
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserServiceInter {
 
 
-    @Autowired
-    @Qualifier("userRepository")
-    private UserRepository userDao;
+
+    private final UserRepository userDao;
 
     @Override
     public List<User> getAll(String name, String surname) {
@@ -58,19 +58,15 @@ public class UserServiceImpl implements UserServiceInter {
     public boolean isEmailExists(String email) {
         return userDao.existsUserByEmail(email);
     }
-
     @Override
     public boolean isIdExists(Integer id) {
         return userDao.existsUserById(id);
     }
-
     @Override
     public boolean removeUser(int id) {
         userDao.deleteById(id);
         return true;
     }
-
-
 
 
     @Override

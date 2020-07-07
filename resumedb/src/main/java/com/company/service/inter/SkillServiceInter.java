@@ -10,20 +10,23 @@ import com.company.entity.Skill;
 import java.util.List;
 
 /**
- *
- * @author Xeyal
+ * @author Khayal Baylarov
  */
 public interface SkillServiceInter {
 
     public List<Skill> getAll();
 
-    public Skill getById(int id);
-
     Skill updateSkill(Skill u);
-    boolean isIdExists(Integer id);
+
     void removeSkill(int id);
-    boolean existsSkillByName(String name);
+
     public Skill getByName(String name);
 
     public Skill insertSkill(Skill skl);
+
+    boolean existsSkillByName(String name);
+
+    boolean isIdExists(Integer id);
+
+    Skill getById(int id);
 }

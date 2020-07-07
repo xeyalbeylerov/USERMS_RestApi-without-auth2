@@ -8,6 +8,7 @@ package com.company.service.impl;
 import com.company.repo.SkillRepository;
 import com.company.entity.Skill;
 import com.company.service.inter.SkillServiceInter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -16,25 +17,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * @author Xeyal
+ * @author Khayal Baylarov
  */
 @Transactional
 @Service(value = "skillService")
+@RequiredArgsConstructor
 public class SkillServiceImpl implements SkillServiceInter {
 
-    @Autowired
-    @Qualifier(value = "skillRepository")
-    private SkillRepository skillDao;
+    private final SkillRepository skillDao;
 
     @Override
     public List<Skill> getAll() {
         return skillDao.findAll();
-    }
-
-    @Override
-    public Skill getById(int id) {
-        return skillDao.getOne(id);
-
     }
 
     @Override
@@ -43,15 +37,9 @@ public class SkillServiceImpl implements SkillServiceInter {
     }
 
     @Override
-    public boolean isIdExists(Integer id) {
-        return skillDao.existsSkillById(id);
-    }
-
-    @Override
     public Skill insertSkill(Skill skill) {
         return skillDao.save(skill);
     }
-
 
     @Override
     public void removeSkill(int id) {
@@ -59,13 +47,21 @@ public class SkillServiceImpl implements SkillServiceInter {
     }
 
     @Override
-    public boolean existsSkillByName(String name) {
-        return skillDao.existsSkillByName(name);
-    }
-
-    @Override
     public Skill getByName(String name) {
         return skillDao.findSkillByName(name);
     }
 
+    @Override
+    public boolean existsSkillByName(String name) {
+        return skillDao.existsSkillByName(name);
+    }
+    @Override
+    public boolean isIdExists(Integer id) {
+        return skillDao.existsSkillById(id);
+    }
+    @Override
+    public Skill getById(int id) {
+        return skillDao.getOne(id);
+
+    }
 }

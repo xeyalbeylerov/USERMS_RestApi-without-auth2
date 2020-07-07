@@ -10,21 +10,21 @@ import com.company.entity.UserSkill;
 import java.util.List;
 
 /**
- * @author Xeyal
+ * @author Khayal Baylarov
  */
 public interface UserSkillServiceInter {
 
     List<UserSkill> getAllSkillByUserId(int id);
 
-    UserSkill getUserSkillById(int id);
-
     UserSkill insertUserSkill(UserSkill u);
 
     UserSkill updateUserSkill(UserSkill u);
 
-    boolean isIdExists(Integer id);
+    void removeUserSkill(int id);
 
     boolean existsUserSkillByUserIdAndSkillId(Integer userId, Integer skillId);
 
-    void removeUserSkill(int id);
+    boolean isIdExists(Integer id);
+
+    UserSkill getUserSkillById(int id);
 }

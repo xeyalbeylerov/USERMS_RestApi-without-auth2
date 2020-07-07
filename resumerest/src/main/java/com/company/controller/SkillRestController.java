@@ -6,6 +6,7 @@ import com.company.entity.Skill;
 import com.company.exceptions.skillExceptions.SkillAlreadyExistsException;
 import com.company.exceptions.skillExceptions.SkillNotFoundException;
 import com.company.service.inter.SkillServiceRestInter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class SkillRestController {
-    @Autowired
-    @Qualifier("skillServiceRest")
-    private SkillServiceRestInter skillService;
+
+    private final SkillServiceRestInter skillService;
 
     //return all users
     //users?name=&surname=&age=
@@ -39,7 +40,7 @@ public class SkillRestController {
     //return specify skill by id
     @GetMapping("/skills/{id}")
     public ResponseEntity<ResponseDTO> getSkill(@PathVariable("id") int id) {
-        Skill skill = null;
+        Skill skill;
         try {
             skill = skillService.getById(id);
         } catch (SkillNotFoundException ex) {

@@ -19,8 +19,15 @@ import java.util.List;
 public class UserRestController {
 
     private final UserServiceRestInter userService;
-
-
+    //convert User List to UserDto List
+    private List<UserDto> usersToUserDtos(List<User> users){
+        List<UserDto> userDtos = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            User u = users.get(i);
+            userDtos.add(new UserDto(u));
+        }
+        return userDtos;
+    }
     //return all users
     //users?name=&surname=&age=
     @GetMapping("/users")
@@ -29,30 +36,10 @@ public class UserRestController {
             @RequestParam(name = "surname", required = false) String surname,
             @RequestParam(name = "age", required = false) Integer age) {
         List<User> users = userService.getAll(name, surname, age);
-        List<UserDto> userDtos = new ArrayList<>();
-        //convert User to UserDto
-        for (int i = 0; i < users.size(); i++) {
-            User u = users.get(i);
-            userDtos.add(new UserDto(u));
-        }
+        //converting User to UserDto
+        List<UserDto> userDtos=usersToUserDtos(users);
         return ResponseEntity.ok(ResponseDto.of(userDtos));
     }
-
-//    @GetMapping("/foo")
-//    public ResponseEntity<ResponseDTO> foo(
-//            @RequestParam(name="name",required = false)String name,
-//            @RequestParam(name="surname",required = false)String surname,
-//            @RequestParam(name="age",required = false)Integer age)
-//    {
-//        List<User> users = userService.getAll(name, surname, age);
-//        List<UserDTO> userDTOS=new ArrayList<>();
-//        for(int i=0;i<users.size();i++){
-//            User u=users.get(i);
-//            userDTOS.add(new UserDTO(u));
-//        }
-//        return ResponseEntity.ok(ResponseDTO.of(userDTOS));
-//    }
-
 
     //return specify user by id
     @GetMapping("/users/{id}")
@@ -76,7 +63,6 @@ public class UserRestController {
         } catch (UserNotFoundException ex) {
             return ResponseEntity.ok(ResponseDto.of(404, "There is no user found with this id"));
         }
-
         return ResponseEntity.ok(ResponseDto.of(new UserDto(user), "Successfully deleted"));
     }
 
@@ -104,9 +90,4 @@ public class UserRestController {
         }
         return ResponseEntity.ok(ResponseDto.of(userDTO, "User successfully updated"));
     }
-//    @GetMapping("/users")
-//    public ResponseEntity getUsers() {
-//        return ResponseEntity.status(HttpStatus.OK).body("users");
-////        return new ResponseEntity<String>("", HttpStatus.OK).getBody();
-//    }
 }

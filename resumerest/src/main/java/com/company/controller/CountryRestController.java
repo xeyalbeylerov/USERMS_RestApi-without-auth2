@@ -19,18 +19,23 @@ public class CountryRestController {
 
     private final CountryServiceRestInter countryService;
 
+    //convert Country List to CountryDto List
+    private List<CountryDto> countryToCountryDtos(List<Country> countries) {
+        List<CountryDto> countryDtos = new ArrayList<>();
+        for (int i = 0; i < countries.size(); i++) {
+            Country u = countries.get(i);
+            countryDtos.add(new CountryDto(u));
+        }
+        return countryDtos;
+    }
+
     //return all users
     //countries?name=&surname=&age=
     @GetMapping("/countries")
     public ResponseEntity<ResponseDto> getCountries() {
         List<Country> countries = countryService.getAll();
-
-        List<CountryDto> countryDtos = new ArrayList<>();
-        //skill-i skillDto ya cevirir
-        for (int i = 0; i < countries.size(); i++) {
-            Country s = countries.get(i);
-            countryDtos.add(new CountryDto(s));
-        }
+        //converting Country List to CountryDto List
+        List<CountryDto> countryDtos = countryToCountryDtos(countries);
         return ResponseEntity.ok(ResponseDto.of(countryDtos));
     }
 
@@ -57,7 +62,6 @@ public class CountryRestController {
         } catch (CountryNotFoundException ex) {
             return ResponseEntity.ok(ResponseDto.of(404, "There is no country found with this id"));
         }
-
         return ResponseEntity.ok(ResponseDto.of(new CountryDto(country), "Successfully deleted"));
     }
 
@@ -81,14 +85,8 @@ public class CountryRestController {
     public ResponseEntity<ResponseDto> updateCountry(@RequestBody CountryDto countryDTO) {
 
         Country country = new Country(countryDTO.getId(), countryDTO.getName(), countryDTO.getNationality());
-        try {
-            country = countryService.updateCountry(country);
-        } catch (CountryNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDto.of(404, "Country does not exists"));
-        } catch (CountryAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDto.of(400, "Country already exists"));
-        }
-        return ResponseEntity.ok(ResponseDto.of(new CountryDto(country), "Successfully updated"));
+        //        catch errors and return ResponseEntity
+        return updateCountryLogic(country);
     }
 
     //take path and json country name and update country then return it
@@ -96,6 +94,12 @@ public class CountryRestController {
     public ResponseEntity<ResponseDto> updateCountry(@PathVariable("countryid") int countryId, @RequestBody CountryDto countryDTO) {
 
         Country country = new Country(countryId, countryDTO.getName(), countryDTO.getNationality());
+        //        catch errors and return ResponseEntity
+        return updateCountryLogic(country);
+    }
+
+    //    For updateCountry methods
+    private ResponseEntity updateCountryLogic(Country country) {
         try {
             country = countryService.updateCountry(country);
         } catch (CountryNotFoundException ex) {
@@ -105,5 +109,4 @@ public class CountryRestController {
         }
         return ResponseEntity.ok(ResponseDto.of(new CountryDto(country), "Successfully updated"));
     }
-
 }

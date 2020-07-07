@@ -6,6 +6,7 @@ import com.company.exceptions.countryExceptions.CountryAlreadyExistsException;
 import com.company.exceptions.countryExceptions.CountryNotFoundException;
 import com.company.service.inter.CountryServiceInter;
 import com.company.service.inter.CountryServiceRestInter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,9 @@ import java.util.List;
  */
 
 @Service(value = "countryServiceRest")
+@RequiredArgsConstructor
 public class CountryServiceRestImpl implements CountryServiceRestInter {
 
-    @Autowired
-    @Qualifier("countryService")
     private CountryServiceInter countryDao;
 
     @Override

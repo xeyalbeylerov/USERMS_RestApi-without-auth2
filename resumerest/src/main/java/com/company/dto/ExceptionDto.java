@@ -1,10 +1,10 @@
 package com.company.dto;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter @Setter @NoArgsConstructor
+@Data
+@NoArgsConstructor
 public class ExceptionDto {
     private Integer errorCode;
     private String errorMessage;

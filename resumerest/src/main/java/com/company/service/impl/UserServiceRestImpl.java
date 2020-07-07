@@ -13,6 +13,7 @@ import com.company.dto.UserDto;
 import com.company.entity.User;
 import com.company.service.inter.UserServiceInter;
 import com.company.service.inter.UserServiceRestInter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -25,12 +26,9 @@ import java.util.List;
 
 
 @Service(value = "userServiceRest")
-
+@RequiredArgsConstructor
 public class UserServiceRestImpl implements UserServiceRestInter {
 
-
-    @Autowired
-    @Qualifier("userService")
     private UserServiceInter userDao;
 
     @Override

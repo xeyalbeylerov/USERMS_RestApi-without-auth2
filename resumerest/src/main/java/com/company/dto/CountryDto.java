@@ -1,13 +1,9 @@
 package com.company.dto;
 
 import com.company.entity.Country;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class CountryDto {
     private Integer id;
     private String name;

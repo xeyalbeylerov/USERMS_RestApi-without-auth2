@@ -1,12 +1,10 @@
 package com.company.dto;
 
 import com.company.entity.UserSkill;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class UserSkillDto {
     private Integer id;
@@ -14,9 +12,8 @@ public class UserSkillDto {
     private SkillDto skill;
 
 
-
     public UserSkillDto(UserSkill userSkill) {
-        this.id =userSkill.getId();
+        this.id = userSkill.getId();
         this.power = userSkill.getPower();
         this.skill = new SkillDto(userSkill.getSkill());
     }

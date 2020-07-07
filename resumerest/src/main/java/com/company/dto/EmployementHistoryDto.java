@@ -1,15 +1,11 @@
 package com.company.dto;
 
 import com.company.entity.EmployementHistory;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Date;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class EmployementHistoryDto {
     private Integer id;
     private String header;

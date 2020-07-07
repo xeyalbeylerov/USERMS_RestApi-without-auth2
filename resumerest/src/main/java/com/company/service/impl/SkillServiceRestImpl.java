@@ -6,6 +6,7 @@ import com.company.exceptions.skillExceptions.SkillAlreadyExistsException;
 import com.company.exceptions.skillExceptions.SkillNotFoundException;
 import com.company.service.inter.SkillServiceInter;
 import com.company.service.inter.SkillServiceRestInter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,9 @@ import java.util.List;
  */
 
 @Service(value = "skillServiceRest")
+@RequiredArgsConstructor
 public class SkillServiceRestImpl implements SkillServiceRestInter {
 
-    @Autowired
-    @Qualifier(value = "skillService")
     private SkillServiceInter skillDao;
 
     @Override

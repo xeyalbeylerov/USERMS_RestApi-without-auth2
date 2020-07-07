@@ -2,13 +2,12 @@ package com.company.dto;
 
 import com.company.entity.User;
 import com.company.entity.UserSkill;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
-@Getter @Setter @NoArgsConstructor
+
+@Data
 public class UserDto {
     private int id;
     private String name;
@@ -22,7 +21,7 @@ public class UserDto {
         this.id = u.getId();
         this.name = u.getName();
         this.surname = u.getSurname();
-        this.email=u.getEmail();
+        this.email = u.getEmail();
         List<UserSkillDto> list = new ArrayList<>();
 
         List<UserSkill> userSkills = u.getSkills();

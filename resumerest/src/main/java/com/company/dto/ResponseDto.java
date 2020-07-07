@@ -1,10 +1,10 @@
 package com.company.dto;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter @Setter @NoArgsConstructor
+@Data
+@NoArgsConstructor
 public class ResponseDto {
     private Integer errorCode;
     private String errorMessage;
@@ -16,12 +16,14 @@ public class ResponseDto {
         resp.setObj(obj);
         return resp;
     }
+
     public static ResponseDto of(Object obj, String successMessage) {
         ResponseDto resp = new ResponseDto();
         resp.setObj(obj);
         resp.setSuccessMessage(successMessage);
         return resp;
     }
+
     public static ResponseDto of(Integer errorCode, String errorMessage) {
         ResponseDto resp = new ResponseDto();
         resp.setErrorCode(errorCode);

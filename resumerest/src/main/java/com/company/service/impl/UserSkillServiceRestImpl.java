@@ -11,6 +11,7 @@ import com.company.exceptions.userSkillExceptions.UserSkillNotFoundException;
 import com.company.service.inter.UserServiceRestInter;
 import com.company.service.inter.UserSkillServiceInter;
 import com.company.service.inter.UserSkillServiceRestInter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -22,18 +23,12 @@ import java.util.List;
  */
 
 @Service(value = "userSkillServiceRest")
+@RequiredArgsConstructor
 public class UserSkillServiceRestImpl implements UserSkillServiceRestInter {
-    @Autowired
-    @Qualifier(value = "userSkillService")
-    private UserSkillServiceInter userSkillDao;
 
-    @Autowired
-    @Qualifier("userServiceRest")
-    private UserServiceRestInter userService;
-
-    @Autowired
-    @Qualifier("skillServiceRest")
-    private SkillServiceRestImpl skillService;
+    private final UserSkillServiceInter userSkillDao;
+    private final UserServiceRestInter userService;
+    private final SkillServiceRestImpl skillService;
 
     @Override
     public List<UserSkill> getAllSkillByUserId(int id) {

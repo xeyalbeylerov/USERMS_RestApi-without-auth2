@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/resumedb/ResumeDbAppJPASpringData.iml" filepath="$PROJECT_DIR$/resumedb/ResumeDbAppJPASpringData.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/UserMS Rest api(without auth2).iml" filepath="$PROJECT_DIR$/.idea/UserMS Rest api(without auth2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/resumerest/resumerestapi.iml" filepath="$PROJECT_DIR$/resumerest/resumerestapi.iml" />
+    </modules>
+  </component>
+</project>

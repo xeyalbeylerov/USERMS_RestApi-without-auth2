@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="resumerest:war">
+    <output-path>$PROJECT_DIR$/resumerest/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>resumerest</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="resumerestapi-0.0.2.war">
+      <element id="artifact" artifact-name="resumerest:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SkillServiceRestImpl implements SkillServiceRestInter {
 
-    private SkillServiceInter skillDao;
+    private final SkillServiceInter skillDao;
 
     @Override
     public List<Skill> getAll() {

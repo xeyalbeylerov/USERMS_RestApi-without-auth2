@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CountryServiceRestImpl implements CountryServiceRestInter {
 
-    private CountryServiceInter countryDao;
+    private final CountryServiceInter countryDao;
 
     @Override
     public List<Country> getAll() {

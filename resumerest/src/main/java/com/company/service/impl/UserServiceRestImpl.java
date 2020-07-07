@@ -29,7 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceRestImpl implements UserServiceRestInter {
 
-    private UserServiceInter userDao;
+    private final UserServiceInter userDao;
 
     @Override
     public List<User> getAll(String name, String surname) {

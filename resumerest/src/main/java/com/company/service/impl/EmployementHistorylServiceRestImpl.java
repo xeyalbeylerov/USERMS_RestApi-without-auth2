@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmployementHistorylServiceRestImpl implements EmployementHistorylServiceRestInter {
 
-    private EmployementHistorylServiceInter employementHistory;
+    private final EmployementHistorylServiceInter employementHistory;
 
     @Override
     public List<EmployementHistory> getAllEmployementHistoryByUserId(int id) {

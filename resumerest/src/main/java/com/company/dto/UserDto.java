@@ -3,11 +3,13 @@ package com.company.dto;
 import com.company.entity.User;
 import com.company.entity.UserSkill;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class UserDto {
     private int id;
     private String name;

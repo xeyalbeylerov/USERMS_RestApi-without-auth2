@@ -7,15 +7,15 @@ package com.company.service.impl;
 
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.company.exceptions.IdIsNullException;
-import com.company.exceptions.userExceptions.UserNotFoundException;
+import com.company.exceptionHandler.exceptions.EntityAlreadyExistsException;
+import com.company.exceptionHandler.exceptions.EntityNotFoundException;
+import com.company.exceptionHandler.exceptions.IdIsNullException;
 import com.company.dto.UserDto;
 import com.company.entity.User;
 import com.company.service.inter.UserServiceInter;
 import com.company.service.inter.UserServiceRestInter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,6 +42,13 @@ public class UserServiceRestImpl implements UserServiceRestInter {
     }
 
     @Override
+    public User getById(int id){
+        if (!userDao.isIdExists(id)) throw new EntityNotFoundException("User not found");
+        User user = userDao.getById(id);
+        return user;
+    }
+
+    @Override
     public User findByEmailAndPassword(String email, String password) {
         return userDao.findByEmailAndPassword(email, password);
     }
@@ -52,20 +59,20 @@ public class UserServiceRestImpl implements UserServiceRestInter {
     }
 
     @Override
-    public boolean removeUser(int id) throws UserNotFoundException {
-        if(!userDao.isIdExists(id))throw new UserNotFoundException();
+    public boolean removeUser(int id) {
+        if(!userDao.isIdExists(id))throw new EntityNotFoundException("User not found");
         userDao.removeUser(id);
         return true;
     }
 
 
     @Override
-    public UserDto updateUser(UserDto userDTO) throws IdIsNullException, UserNotFoundException {
+    public UserDto updateUser(UserDto userDTO) {
         Integer id = userDTO.getId();
         //check id null
-        if (id == null) throw new IdIsNullException();
+        if (id == null) throw new IdIsNullException("User id is null");
         //check user is exists
-        if (!userDao.isIdExists(id)) throw new UserNotFoundException();
+        if (!userDao.isIdExists(id)) throw new EntityNotFoundException("User not found");
 
         User user = userDao.getById(id);
         //update users parameter
@@ -79,23 +86,16 @@ public class UserServiceRestImpl implements UserServiceRestInter {
     }
 
 
-    @Override
-    public User getById(int id) throws UserNotFoundException {
-        if (!userDao.isIdExists(id)) throw new UserNotFoundException();
-        User user = userDao.getById(id);
-        return user;
-    }
-
 
     @Autowired
     BCrypt.Hasher geHasher;
 
     @Override
-    public UserDto addUser(UserDto userDto) throws Exception {
+    public UserDto addUser(UserDto userDto){
 
         boolean isExists = userDao.isEmailExists(userDto.getEmail());
         if (isExists == true) {
-            throw new Exception();
+            throw new EntityAlreadyExistsException("User email already exists");
         }
         User user = new User();
         user.setName(userDto.getName());

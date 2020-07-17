@@ -6,8 +6,6 @@ import com.company.entity.EmployementHistory;
 import com.company.service.inter.EmployementHistorylServiceInter;
 import com.company.service.inter.EmployementHistorylServiceRestInter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

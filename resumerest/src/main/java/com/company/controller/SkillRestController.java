@@ -3,8 +3,6 @@ package com.company.controller;
 import com.company.dto.ResponseDto;
 import com.company.dto.SkillDto;
 import com.company.entity.Skill;
-import com.company.exceptions.skillExceptions.SkillAlreadyExistsException;
-import com.company.exceptions.skillExceptions.SkillNotFoundException;
 import com.company.service.inter.SkillServiceRestInter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +36,7 @@ public class SkillRestController {
     @GetMapping("/skills/{id}")
     public ResponseEntity<ResponseDto> getSkill(@PathVariable("id") int id) {
         Skill skill;
-        try {
             skill = skillService.getById(id);
-        } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDto.of(404, "There is no skill found with this id"));
-        }
         return ResponseEntity.ok(ResponseDto.of(new SkillDto(skill)));
     }
 
@@ -50,13 +44,8 @@ public class SkillRestController {
     @DeleteMapping("/skills/{id}")
     public ResponseEntity<ResponseDto> deleteSkill(@PathVariable("id") int id) {
         Skill skill;
-        try {
             skill = skillService.getById(id);
             skillService.removeSkill(id);
-        } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDto.of(404, "There is no skill found with this id"));
-        }
-
         return ResponseEntity.ok(ResponseDto.of(new SkillDto(skill), "Successfully deleted"));
     }
 
@@ -65,11 +54,7 @@ public class SkillRestController {
     public ResponseEntity<ResponseDto> addSkill(@RequestBody SkillDto skillDto) {
 
         Skill skill = new Skill(null, skillDto.getName());
-        try {
             skill = skillService.insertSkill(skill);
-        } catch (SkillAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDto.of(400, "Skill already exists"));
-        }
         return ResponseEntity.ok(ResponseDto.of(new SkillDto(skill), "Successfully added"));
 
     }
@@ -93,13 +78,7 @@ public class SkillRestController {
 
     //    For updateSkill methods
     private ResponseEntity updateSkillLogic(Skill skill) {
-        try {
             skill = skillService.updateSkill(skill);
-        } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDto.of(404, "Skill does not exists"));
-        } catch (SkillAlreadyExistsException ex) {
-            return ResponseEntity.ok(ResponseDto.of(400, "Skill already exists"));
-        }
         return ResponseEntity.ok(ResponseDto.of(new SkillDto(skill), "Successfully updated"));
     }
 

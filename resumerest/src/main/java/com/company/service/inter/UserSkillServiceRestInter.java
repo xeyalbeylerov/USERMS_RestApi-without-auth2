@@ -6,11 +6,6 @@
 package com.company.service.inter;
 
 import com.company.entity.UserSkill;
-import com.company.exceptions.IdIsNullException;
-import com.company.exceptions.skillExceptions.SkillNotFoundException;
-import com.company.exceptions.userExceptions.UserNotFoundException;
-import com.company.exceptions.userSkillExceptions.UserSkillAlreadyExists;
-import com.company.exceptions.userSkillExceptions.UserSkillNotFoundException;
 
 import java.util.List;
 
@@ -21,9 +16,11 @@ public interface UserSkillServiceRestInter {
 
     List<UserSkill> getAllSkillByUserId(int id);
 
-    UserSkill insertUserSkill(Integer userId,UserSkill u) throws UserNotFoundException, UserSkillAlreadyExists, SkillNotFoundException;
-    UserSkill getUserSkillById(int id) throws UserSkillNotFoundException;
-    UserSkill updateUserSkill(Integer userId,UserSkill u) throws IdIsNullException, UserSkillNotFoundException, UserNotFoundException;
+    UserSkill insertUserSkill(Integer userId, UserSkill u);
+
+    UserSkill getUserSkillById(int id);
+
+    UserSkill updateUserSkill(Integer userId, UserSkill u);
 
     void removeUserSkill(int id);
 }

@@ -5,8 +5,6 @@
  */
 package com.company.service.inter;
 
-import com.company.exceptions.IdIsNullException;
-import com.company.exceptions.userExceptions.UserNotFoundException;
 import com.company.dto.UserDto;
 import com.company.entity.User;
 
@@ -25,12 +23,12 @@ public interface UserServiceRestInter {
 
     User findByEmail(String email);
 
-    User getById(int userId) throws UserNotFoundException;
+    User getById(int userId);
 
-    UserDto addUser(UserDto u) throws Exception;
+    UserDto addUser(UserDto u);
 
-    UserDto updateUser(UserDto userEditDto) throws IdIsNullException, UserNotFoundException;
+    UserDto updateUser(UserDto userEditDto);
 
-    boolean removeUser(int i) throws UserNotFoundException;
+    boolean removeUser(int i);
 
 }

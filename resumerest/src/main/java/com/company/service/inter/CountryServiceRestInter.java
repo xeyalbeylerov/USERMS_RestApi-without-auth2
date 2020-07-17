@@ -6,8 +6,8 @@
 package com.company.service.inter;
 
 import com.company.entity.Country;
-import com.company.exceptions.countryExceptions.CountryAlreadyExistsException;
-import com.company.exceptions.countryExceptions.CountryNotFoundException;
+import com.company.exceptionHandler.exceptions.EntityAlreadyExistsException;
+import com.company.exceptionHandler.exceptions.EntityNotFoundException;
 
 import java.util.List;
 
@@ -18,9 +18,9 @@ import java.util.List;
 public interface CountryServiceRestInter {
 
     List<Country> getAll();
-    Country getById(int id) throws CountryNotFoundException;
-    Country updateCountry(Country u) throws CountryNotFoundException, CountryAlreadyExistsException;
-    Country insertCountry(Country u) throws CountryAlreadyExistsException;
-    void removeCountry(int id) throws CountryNotFoundException;
+    Country getById(int id);
+    Country updateCountry(Country u);
+    Country insertCountry(Country u);
+    void removeCountry(int id);
     
 }

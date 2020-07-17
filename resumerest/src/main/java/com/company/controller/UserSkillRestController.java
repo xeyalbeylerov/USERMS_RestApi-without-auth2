@@ -5,11 +5,6 @@ import com.company.dto.SkillDto;
 import com.company.dto.UserSkillDto;
 import com.company.entity.Skill;
 import com.company.entity.UserSkill;
-import com.company.exceptions.IdIsNullException;
-import com.company.exceptions.skillExceptions.SkillNotFoundException;
-import com.company.exceptions.userExceptions.UserNotFoundException;
-import com.company.exceptions.userSkillExceptions.UserSkillAlreadyExists;
-import com.company.exceptions.userSkillExceptions.UserSkillNotFoundException;
 import com.company.service.inter.UserSkillServiceRestInter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -76,16 +71,7 @@ public class UserSkillRestController {
         Skill s = new Skill();
         s.setId(skillDTO.getId());
         userSkill.setSkill(s);
-
-        try {
-            userSkillService.insertUserSkill(id, userSkill);
-        } catch (UserNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDto.of(404, "There is no user found with this id"));
-        } catch (UserSkillAlreadyExists ex) {
-            return ResponseEntity.ok(ResponseDto.of(400, "User already have this skill"));
-        } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDto.of(404, "There is ot any skill for this id"));
-        }
+        userSkillService.insertUserSkill(id, userSkill);
         return ResponseEntity.ok(ResponseDto.of(userSkillDTO, "Successfully added"));
     }
 
@@ -128,16 +114,7 @@ public class UserSkillRestController {
         s.setId(skillId);
         userSkill.setSkill(s);
         UserSkill userSkillReturned;
-        try {
-            userSkillReturned = userSkillService.insertUserSkill(id, userSkill);
-        } catch (UserNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDto.of(404, "There is no user found with this id"));
-        } catch (UserSkillAlreadyExists ex) {
-            return ResponseEntity.ok(ResponseDto.of(400, "User already have this skill"));
-        } catch (SkillNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDto.of(404, "There is not any skill for this id"));
-        }
-
+        userSkillReturned = userSkillService.insertUserSkill(id, userSkill);
         return ResponseEntity.ok(ResponseDto.of(new UserSkillDto(userSkillReturned), "Successfully added"));
     }
 
@@ -155,16 +132,7 @@ public class UserSkillRestController {
         s.setId(skillDTO.getId());
         s.setName(skillDTO.getName());
         userSkill.setSkill(s);
-
-        try {
-            userSkillService.updateUserSkill(id, userSkill);
-        } catch (IdIsNullException e) {
-            return ResponseEntity.ok(ResponseDto.of(500, "User skills id must be filled while update"));
-        } catch (UserSkillNotFoundException e) {
-            return ResponseEntity.ok(ResponseDto.of(404, "There is no user skills found with this id"));
-        } catch (UserNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDto.of(404, "There is no user found with this id"));
-        }
+        userSkillService.updateUserSkill(id, userSkill);
         return ResponseEntity.ok(ResponseDto.of(userSkillDTO, "User skill Successfully updated"));
     }
 }

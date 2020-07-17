@@ -8,11 +8,6 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class ResumerestapiApplication {
 
-	@Bean
-	public BCrypt.Hasher getHash() {
-		BCrypt.Hasher getHash=BCrypt.withDefaults();
-		return getHash;
-	}
 	public static void main(String[] args) {
 		SpringApplication.run(ResumerestapiApplication.class, args);
 	}

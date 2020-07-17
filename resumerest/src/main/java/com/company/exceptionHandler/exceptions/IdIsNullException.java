@@ -1,10 +1,10 @@
-package com.company.exceptions;
+package com.company.exceptionHandler.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NO_CONTENT)
-public class IdIsNullException extends Exception{
+public class IdIsNullException extends RuntimeException{
     public IdIsNullException() {
     }
 

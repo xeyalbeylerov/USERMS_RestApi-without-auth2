@@ -1,6 +1,7 @@
-package com.company;
+package com.company.config;
 
 
+import com.company.ResumerestapiApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 

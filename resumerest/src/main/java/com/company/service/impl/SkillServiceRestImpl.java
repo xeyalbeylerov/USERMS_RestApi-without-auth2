@@ -2,13 +2,11 @@ package com.company.service.impl;
 
 
 import com.company.entity.Skill;
-import com.company.exceptions.skillExceptions.SkillAlreadyExistsException;
-import com.company.exceptions.skillExceptions.SkillNotFoundException;
+import com.company.exceptionHandler.exceptions.EntityAlreadyExistsException;
+import com.company.exceptionHandler.exceptions.EntityNotFoundException;
 import com.company.service.inter.SkillServiceInter;
 import com.company.service.inter.SkillServiceRestInter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,46 +27,46 @@ public class SkillServiceRestImpl implements SkillServiceRestInter {
     }
 
     @Override
-    public Skill getById(int id) throws SkillNotFoundException {
-        if (!skillDao.isIdExists(id)) throw new SkillNotFoundException();
+    public Skill getById(int id){
+        if (!skillDao.isIdExists(id)) throw new EntityNotFoundException("Skill not found");
         return skillDao.getById(id);
     }
 
     @Override
-    public Skill updateSkill(Skill skill) throws SkillNotFoundException, SkillAlreadyExistsException {
+    public Skill updateSkill(Skill skill){
         //check skill exists
         boolean isExists = skillDao.isIdExists(skill.getId());
-        if (!isExists) throw new SkillNotFoundException();
+        if (!isExists) throw new EntityNotFoundException("Skill not found");
 
         //check dublicate skill
         boolean isAlreadyExists = skillDao.existsSkillByName(skill.getName());
-        if (isAlreadyExists) throw new SkillAlreadyExistsException();
+        if (isAlreadyExists) throw new EntityAlreadyExistsException("Skill already exists");
         return skillDao.updateSkill(skill);
     }
 
     @Override
-    public Skill insertSkill(Skill skill) throws SkillAlreadyExistsException {
+    public Skill insertSkill(Skill skill){
         //check skill exists
         boolean isExists = skillDao.existsSkillByName(skill.getName());
-        if (isExists) throw new SkillAlreadyExistsException();
+        if (isExists) throw new EntityAlreadyExistsException("Skill already exists");
 
         return skillDao.insertSkill(skill);
     }
 
 
     @Override
-    public void removeSkill(int id) throws SkillNotFoundException {
+    public void removeSkill(int id){
         //check skill exists
         boolean isExists = skillDao.isIdExists(id);
-        if (!isExists) throw new SkillNotFoundException();
+        if (!isExists) throw new EntityNotFoundException("Skill not found");
         skillDao.removeSkill(id);
     }
 
     @Override
-    public Skill getByName(String name) throws SkillNotFoundException {
+    public Skill getByName(String name){
         //check skill exists
         boolean isExists = skillDao.existsSkillByName(name);
-        if (!isExists) throw new SkillNotFoundException();
+        if (!isExists) throw new EntityNotFoundException("Skill not found");
         return skillDao.getByName(name);
     }
 

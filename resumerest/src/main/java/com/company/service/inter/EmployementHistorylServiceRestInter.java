@@ -14,5 +14,5 @@ import java.util.List;
  * @author xeyal
  */
 public interface EmployementHistorylServiceRestInter {
-     public List<EmployementHistory> getAllEmployementHistoryByUserId(int userId);
+     List<EmployementHistory> getAllEmployementHistoryByUserId(int userId);
 }

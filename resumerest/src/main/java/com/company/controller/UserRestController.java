@@ -1,8 +1,6 @@
 package com.company.controller;
 
 
-import com.company.exceptions.IdIsNullException;
-import com.company.exceptions.userExceptions.UserNotFoundException;
 import com.company.dto.ResponseDto;
 import com.company.dto.UserDto;
 import com.company.entity.User;
@@ -19,8 +17,9 @@ import java.util.List;
 public class UserRestController {
 
     private final UserServiceRestInter userService;
+
     //convert User List to UserDto List
-    private List<UserDto> usersToUserDtos(List<User> users){
+    private List<UserDto> usersToUserDtos(List<User> users) {
         List<UserDto> userDtos = new ArrayList<>();
         for (int i = 0; i < users.size(); i++) {
             User u = users.get(i);
@@ -28,6 +27,7 @@ public class UserRestController {
         }
         return userDtos;
     }
+
     //return all users
     //users?name=&surname=&age=
     @GetMapping("/users")
@@ -37,7 +37,7 @@ public class UserRestController {
             @RequestParam(name = "age", required = false) Integer age) {
         List<User> users = userService.getAll(name, surname, age);
         //converting User to UserDto
-        List<UserDto> userDtos=usersToUserDtos(users);
+        List<UserDto> userDtos = usersToUserDtos(users);
         return ResponseEntity.ok(ResponseDto.of(userDtos));
     }
 
@@ -45,11 +45,7 @@ public class UserRestController {
     @GetMapping("/users/{id}")
     public ResponseEntity<ResponseDto> getUser(@PathVariable("id") int id) {
         User user;
-        try {
-         user = userService.getById(id);
-        } catch (UserNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDto.of(404, "There is no user found with this id"));
-        }
+        user = userService.getById(id);
         return ResponseEntity.ok(ResponseDto.of(new UserDto(user)));
     }
 
@@ -57,12 +53,8 @@ public class UserRestController {
     @DeleteMapping("/users/{id}")
     public ResponseEntity<ResponseDto> deleteUser(@PathVariable("id") int id) {
         User user;
-        try {
-            user = userService.getById(id);
-            userService.removeUser(id);
-        } catch (UserNotFoundException ex) {
-            return ResponseEntity.ok(ResponseDto.of(404, "There is no user found with this id"));
-        }
+        user = userService.getById(id);
+        userService.removeUser(id);
         return ResponseEntity.ok(ResponseDto.of(new UserDto(user), "Successfully deleted"));
     }
 
@@ -70,11 +62,7 @@ public class UserRestController {
     @PostMapping("/users")
     public ResponseEntity<ResponseDto> addUser(@RequestBody UserDto userDto) {
         UserDto userDTO;
-        try {
-            userDTO = userService.addUser(userDto);
-        } catch (Exception ex) {
-            return ResponseEntity.ok(ResponseDto.of(400, "User already exists"));
-        }
+        userDTO = userService.addUser(userDto);
         return ResponseEntity.ok(ResponseDto.of(userDTO, "Successfully added"));
 
     }
@@ -83,11 +71,7 @@ public class UserRestController {
     @PutMapping("/users")
     public ResponseEntity<ResponseDto> updateUser(@RequestBody UserDto userDto) {
         UserDto userDTO;
-        try {
-            userDTO = userService.updateUser(userDto);
-        } catch (UserNotFoundException | IdIsNullException ex) {
-            return ResponseEntity.ok(ResponseDto.of(404, "There is no user found with this id"));
-        }
+        userDTO = userService.updateUser(userDto);
         return ResponseEntity.ok(ResponseDto.of(userDTO, "User successfully updated"));
     }
 }

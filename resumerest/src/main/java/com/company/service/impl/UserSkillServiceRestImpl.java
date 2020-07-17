@@ -3,17 +3,13 @@ package com.company.service.impl;
 
 import com.company.entity.User;
 import com.company.entity.UserSkill;
-import com.company.exceptions.IdIsNullException;
-import com.company.exceptions.skillExceptions.SkillNotFoundException;
-import com.company.exceptions.userExceptions.UserNotFoundException;
-import com.company.exceptions.userSkillExceptions.UserSkillAlreadyExists;
-import com.company.exceptions.userSkillExceptions.UserSkillNotFoundException;
+import com.company.exceptionHandler.exceptions.EntityAlreadyExistsException;
+import com.company.exceptionHandler.exceptions.EntityNotFoundException;
+import com.company.exceptionHandler.exceptions.IdIsNullException;
 import com.company.service.inter.UserServiceRestInter;
 import com.company.service.inter.UserSkillServiceInter;
 import com.company.service.inter.UserSkillServiceRestInter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,27 +32,22 @@ public class UserSkillServiceRestImpl implements UserSkillServiceRestInter {
     }
 
     @Override
-    public UserSkill insertUserSkill(Integer userId, UserSkill userSkill) throws UserNotFoundException, UserSkillAlreadyExists, SkillNotFoundException {
+    public UserSkill insertUserSkill(Integer userId, UserSkill userSkill){
         //get User
         User u = null;
-        try {
             u = userService.getById(userId);
-        } catch (UserNotFoundException ex) {
-            throw new UserNotFoundException();
-        }
-
         //get skill id
         Integer id = userSkill.getSkill().getId();
 
         //check user have skill or not
         boolean isAlreadyExistsSkill = userSkillDao.existsUserSkillByUserIdAndSkillId(userId, id);
         if (isAlreadyExistsSkill) {
-            throw new UserSkillAlreadyExists();
+            throw new EntityAlreadyExistsException("User Skill already exists");
         }
         //check skill exists or not
         boolean isSkillExists=skillService.existsSkillById(id);
         if(!isSkillExists&&id!=null){
-            throw new SkillNotFoundException();
+            throw new EntityNotFoundException("Skill not found");
         }
 
 
@@ -65,28 +56,24 @@ public class UserSkillServiceRestImpl implements UserSkillServiceRestInter {
     }
 
     @Override
-    public UserSkill getUserSkillById(int id) throws UserSkillNotFoundException {
+    public UserSkill getUserSkillById(int id){
         boolean isUserSkillExists=userSkillDao.isIdExists(id);
-        if (!isUserSkillExists)throw new UserSkillNotFoundException();
+        if (!isUserSkillExists)throw new EntityNotFoundException("User Skill not found");
         return userSkillDao.getUserSkillById(id);
     }
 
     @Override
-    public UserSkill updateUserSkill(Integer userId, UserSkill userSkill) throws IdIsNullException, UserSkillNotFoundException, UserNotFoundException {
+    public UserSkill updateUserSkill(Integer userId, UserSkill userSkill){
         //get User
         User user = null;
-        try {
             user = userService.getById(userId);
-        } catch (UserNotFoundException ex) {
-            throw new UserNotFoundException();
-        }
         userSkill.setUser(user);
 
         Integer id = userSkill.getId();
         //check id null
-        if (id == null) throw new IdIsNullException();
+        if (id == null) throw new IdIsNullException("User skill id is null");
         //check user is exists
-        if (!userSkillDao.isIdExists(id)) throw new UserSkillNotFoundException();
+        if (!userSkillDao.isIdExists(id)) throw new EntityNotFoundException("User Skill not found");
         return userSkillDao.updateUserSkill(userSkill);
     }
 

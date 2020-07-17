@@ -6,26 +6,24 @@
 package com.company.service.inter;
 
 import com.company.entity.Skill;
-import com.company.exceptions.skillExceptions.SkillAlreadyExistsException;
-import com.company.exceptions.skillExceptions.SkillNotFoundException;
 
 import java.util.List;
 
 /**
- *
  * @author Xeyal
  */
 public interface SkillServiceRestInter {
+    List<Skill> getAll();
 
-    public List<Skill> getAll();
+    Skill getById(int id);
 
-    public Skill getById(int id) throws SkillNotFoundException;
+    Skill updateSkill(Skill u);
 
-    Skill updateSkill(Skill u) throws SkillNotFoundException, SkillAlreadyExistsException;
+    void removeSkill(int id);
 
-    void removeSkill(int id) throws SkillNotFoundException;
+    Skill getByName(String name);
 
-    public Skill getByName(String name) throws SkillNotFoundException;
     boolean existsSkillById(Integer id);
-    public Skill insertSkill(Skill skl) throws SkillAlreadyExistsException;
+
+    public Skill insertSkill(Skill skl);
 }
